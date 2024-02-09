@@ -16,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema } from "@/schemas/schemas";
 import { Button } from "../ui/button";
 import { authenticate } from "@/lib/actions";
+import { FormError } from "./formerror";
 
 export function LoginForm() {
   const form = useForm<z.infer<typeof formSchema>>({
