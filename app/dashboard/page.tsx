@@ -7,11 +7,15 @@ export default async function Dashboard() {
   console.log(user);
 
   return (
-    <main className="flex flex-col gap-5 items-center">
-      <p className="text-5xl">Welcome, {user?.user?.name}.</p>
+    <main className="flex flex-col gap-6 items-center">
+      <p className="text-6xl font-medium">Welcome, {user?.user?.name}.</p>
       <LogoutButton>
-        <Button size="lg" variant="secondary">
-          Sign out
+        <Button
+          size="lg"
+          className="text-lg hover:bg-destructive/75 hover:text-white"
+          variant="secondary"
+        >
+          Logout
         </Button>
       </LogoutButton>
     </main>
