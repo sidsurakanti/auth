@@ -7,10 +7,12 @@ export default async function Dashboard() {
   console.log(user);
 
   return (
-    <main>
-      <p>Welcome, {user?.user?.name}</p>
+    <main className="flex flex-col gap-5 items-center">
+      <p className="text-5xl">Welcome, {user?.user?.name}.</p>
       <LogoutButton>
-        <Button variant="outline">Sign out</Button>
+        <Button size="lg" variant="secondary">
+          Sign out
+        </Button>
       </LogoutButton>
     </main>
   );

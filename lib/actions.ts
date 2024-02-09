@@ -20,7 +20,6 @@ export async function authenticate(data: z.infer<typeof formSchema>) {
           return "Something went wrong";
       }
     }
-
     throw error;
   }
 }
