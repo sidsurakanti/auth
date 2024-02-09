@@ -15,6 +15,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema } from "@/schemas/schemas";
 import { Button } from "../ui/button";
+import { authenticate } from "@/lib/actions";
 
 export function LoginForm() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -27,6 +28,7 @@ export function LoginForm() {
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     console.log(data);
+    const message = authenticate(data);
   };
 
   return (
