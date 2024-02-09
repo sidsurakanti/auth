@@ -18,8 +18,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema } from "@/schemas/schemas";
 import { authenticate } from "@/lib/actions";
+import { useState } from "react";
 
 export function LoginForm() {
+  const [formError, setFormError] = useState<string | undefined>("");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -28,11 +30,11 @@ export function LoginForm() {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
     console.log(data);
     // call server action
-    const message = authenticate(data);
-    console.log(message);
+    const message = await authenticate(data);
+    setFormError(message);
   };
 
   return (
@@ -78,7 +80,7 @@ export function LoginForm() {
               )}
             />
             {/* // TODO: update message based on form return */}
-            <FormError message={""} />
+            <FormError message={formError} />
             <Button type="submit" className="hover:bg-blue-500">
               Go
             </Button>

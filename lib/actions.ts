@@ -8,10 +8,7 @@ import { z } from "zod";
 export async function authenticate(data: z.infer<typeof formSchema>) {
   try {
     // call sign in method using nextjs credentials provider
-    const res = await signIn("credentials", data);
-    console.log("Sucessfully signed in!");
-    console.log(res);
-    return res;
+    await signIn("credentials", data);
   } catch (error) {
     // handle auth errors
     if (error instanceof AuthError) {
@@ -22,11 +19,15 @@ export async function authenticate(data: z.infer<typeof formSchema>) {
           return "Something went wrong";
       }
     }
-    console.log(error);
     throw error;
   }
 }
 
 export async function logout() {
-  await signOut();
+  try {
+    // call sign out method
+    await signOut({});
+  } catch (error) {
+    throw error;
+  }
 }

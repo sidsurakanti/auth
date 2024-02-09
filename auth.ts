@@ -14,22 +14,25 @@ export const { auth, signIn, signOut } = NextAuth({
     Credentials({
       // handle the credentials recieved from user
       async authorize(credentials) {
+        // validate credentials with zod schema
         const parsedCredentials = formSchema.safeParse(credentials);
 
         if (parsedCredentials.success) {
-          // get user from db w/ parsed data
+          // fetch user from db w/ parsed data
           const { email, password } = parsedCredentials.data;
           const user = await getUser(email);
           if (!user) return null;
 
-          // compare passwords and return user session
+          // compare passwords using bcrypt and return user session
           const passwordsMatch = await bcrypt.compare(password, user.password);
           if (passwordsMatch) return user;
         }
 
+        // errors
         console.log("Invalid credentials");
         return null;
       },
     }),
+    
   ],
 });

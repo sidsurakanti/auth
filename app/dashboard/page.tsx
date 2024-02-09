@@ -6,7 +6,6 @@ export default async function Dashboard() {
   // get user session from middleware
   const session = await auth();
   const user = session?.user;
-  console.log(user);
 
   return (
     <main className="flex flex-col gap-6 items-center">
