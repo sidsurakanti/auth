@@ -2,6 +2,9 @@
 
 import { CardWrapper } from "@/components/auth/card-wrapper";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { FormError } from "@/components/auth/form-error";
+
 import {
   Form,
   FormControl,
@@ -14,9 +17,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema } from "@/schemas/schemas";
-import { Button } from "@/components/ui/button";
 import { authenticate } from "@/lib/actions";
-import { FormError } from "@/components/auth/form-error";
 
 export function LoginForm() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -29,6 +30,7 @@ export function LoginForm() {
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     console.log(data);
+    // call server action
     const message = authenticate(data);
     console.log(message);
   };

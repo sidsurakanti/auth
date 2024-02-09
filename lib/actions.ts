@@ -7,11 +7,13 @@ import { z } from "zod";
 
 export async function authenticate(data: z.infer<typeof formSchema>) {
   try {
-    // signIn using nextjs credentials provider w/ formData from form
-    await signIn("credentials", data);
+    // call sign in method using nextjs credentials provider
+    const res = await signIn("credentials", data);
     console.log("Sucessfully signed in!");
+    console.log(res);
+    return res;
   } catch (error) {
-    // handle signIn errors
+    // handle auth errors
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
@@ -20,6 +22,7 @@ export async function authenticate(data: z.infer<typeof formSchema>) {
           return "Something went wrong";
       }
     }
+    console.log(error);
     throw error;
   }
 }

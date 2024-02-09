@@ -4,7 +4,7 @@ import { logout } from "@/lib/actions";
 
 export function LogoutButton({ children }: { children: React.ReactNode }) {
   const handleClick = () => {
-    logout()
+    logout();
   };
 
   return <span onClick={handleClick}>{children}</span>;
