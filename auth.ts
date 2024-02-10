@@ -41,7 +41,8 @@ export const { auth, signIn, signOut } = NextAuth({
     // token is jwt token passed down from the jwt callback
     async session({ session, token }) {
       // console.log(token)
-      session.user.id = token.id as string;
+      // here, the default value for the jwt.sub is always the users id
+      session.user.id = token.sub as string;
       return session;
     },
   },
