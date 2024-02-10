@@ -6,6 +6,8 @@ import bcrypt from "bcrypt";
 import { formSchema } from "@/schemas/schemas";
 
 import { getUser } from "@/lib/data";
+import { AdapterUser } from "next-auth/adapters";
+import { User } from "./lib/definitions";
 
 // spread out authConfig and add providers
 export const { auth, signIn, signOut } = NextAuth({
@@ -33,6 +35,14 @@ export const { auth, signIn, signOut } = NextAuth({
         return null;
       },
     }),
-    
   ],
+  callbacks: {
+    // add user's id to session.user so we can access it later on
+    // token is jwt token passed down from the jwt callback
+    async session({ session, token }) {
+      // console.log(token)
+      session.user.id = token.id as string;
+      return session;
+    },
+  },
 });

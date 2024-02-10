@@ -78,7 +78,6 @@ export function LoginForm() {
                 </FormItem>
               )}
             />
-            {/* // TODO: update message based on form return */}
             <FormError message={formError} />
             <Button type="submit" className="hover:bg-blue-500">
               Go
