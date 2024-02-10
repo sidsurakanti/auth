@@ -1,9 +1,33 @@
 "use server";
 
+import { sql } from "@vercel/postgres";
 import { signIn, signOut } from "@/auth";
 import { formSchema } from "@/schemas/schemas";
 import { AuthError } from "next-auth";
 import { z } from "zod";
+import bcrypt from "bcrypt";
+import { User } from "./definitions";
+import { redirect } from "next/navigation";
+
+export async function createUser(user: User) {
+  // encrypt password and destructure data
+  const { name, email, password } = {
+    ...user,
+    password: await bcrypt.hash(user.password, 10),
+  };
+  console.log(name, email, password);
+  try {
+    const res = await sql`
+      INSERT INTO users (name, email, password) 
+      VALUES (${name}, ${email}, ${password})
+    `;
+    console.log("Created new user", res);
+    redirect("/auth/login")
+  } catch (error) {
+    console.log("Database error while creating user", error);
+    throw error;
+  }
+}
 
 export async function authenticate(data: z.infer<typeof formSchema>) {
   try {
