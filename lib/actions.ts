@@ -23,7 +23,6 @@ export async function createUser(user: User) {
       VALUES (${name}, ${email}, ${password})
     `;
     console.log("Created new user", res);
-    redirect("/auth/login");
   } catch (error) {
     if ((error as any).code === "23505") {
       console.log("Error: user with that email already exists");
@@ -32,6 +31,7 @@ export async function createUser(user: User) {
     console.log("Database error", error);
     throw new Error("Database error");
   }
+  redirect("/auth/login");
 }
 
 export async function authenticate(data: z.infer<typeof formSchema>) {

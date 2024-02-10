@@ -42,7 +42,8 @@ export function RegisterForm() {
       password: data.password,
     };
     // add user to db
-    createUser(newUser)
+    const message = await createUser(newUser)
+    setFormError(message);
   };
 
   return (
