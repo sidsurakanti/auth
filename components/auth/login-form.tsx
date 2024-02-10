@@ -31,7 +31,6 @@ export function LoginForm() {
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    console.log(data);
     // call server action
     const message = await authenticate(data);
     setFormError(message);
