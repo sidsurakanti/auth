@@ -15,17 +15,22 @@ export async function createUser(user: User) {
     ...user,
     password: await bcrypt.hash(user.password, 10),
   };
-  console.log(name, email, password);
+
   try {
+    // * duplicate users are not allowed by db columns bc of unique email contrainsts
     const res = await sql`
       INSERT INTO users (name, email, password) 
       VALUES (${name}, ${email}, ${password})
     `;
     console.log("Created new user", res);
-    redirect("/auth/login")
+    redirect("/auth/login");
   } catch (error) {
-    console.log("Database error while creating user", error);
-    throw error;
+    if ((error as any).code === "23505") {
+      console.log("Error: user with that email already exists");
+      return "User with that email already exists";
+    }
+    console.log("Database error", error);
+    throw new Error("Database error");
   }
 }
 
